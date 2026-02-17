@@ -16,7 +16,18 @@ export function formatMessages(
 ): string {
   const lines = messages.map((m) => {
     const displayTime = formatLocalTime(m.timestamp, timezone);
-    return `<message sender="${escapeXml(m.sender_name)}" time="${escapeXml(displayTime)}">${escapeXml(m.content)}</message>`;
+    let attrs = `sender="${escapeXml(m.sender_name)}" time="${escapeXml(displayTime)}"`;
+    if (m.media_type) {
+      attrs += ` media_type="${escapeXml(m.media_type)}"`;
+      if (m.media_path) {
+        const filename = m.media_path.split('/').pop() || '';
+        attrs += ` media_path="/workspace/group/media/${escapeXml(filename)}"`;
+      }
+      if (m.media_mime) attrs += ` media_mime="${escapeXml(m.media_mime)}"`;
+      if (m.media_filename)
+        attrs += ` media_filename="${escapeXml(m.media_filename)}"`;
+    }
+    return `<message ${attrs}>${escapeXml(m.content)}</message>`;
   });
 
   const header = `<context timezone="${escapeXml(timezone)}" />\n`;

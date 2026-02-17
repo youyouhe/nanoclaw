@@ -51,6 +51,10 @@ export interface NewMessage {
   timestamp: string;
   is_from_me?: boolean;
   is_bot_message?: boolean;
+  media_type?: string; // e.g. 'image', 'document', 'video', 'audio', 'sticker'
+  media_path?: string; // absolute path to downloaded file on host
+  media_mime?: string; // MIME type e.g. 'image/jpeg', 'application/pdf'
+  media_filename?: string; // original filename (documents only)
 }
 
 export interface ScheduledTask {
@@ -90,6 +94,14 @@ export interface Channel {
   setTyping?(jid: string, isTyping: boolean): Promise<void>;
   // Optional: sync group/chat names from the platform.
   syncGroups?(force: boolean): Promise<void>;
+  // Optional: send a file (document, image, video, audio).
+  sendFile?(
+    jid: string,
+    buffer: Buffer,
+    mime: string,
+    fileName: string,
+    caption?: string,
+  ): Promise<void>;
 }
 
 // Callback type that channels use to deliver inbound messages
