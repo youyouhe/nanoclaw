@@ -8,7 +8,6 @@ import {
   DATA_DIR,
   GROUPS_DIR,
   IPC_POLL_INTERVAL,
-  MAIN_GROUP_FOLDER,
   TIMEZONE,
 } from './config.js';
 import { AvailableGroup } from './container-runner.js';

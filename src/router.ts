@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { Channel, NewMessage } from './types.js';
 import { formatLocalTime } from './timezone.js';
 
@@ -20,7 +22,7 @@ export function formatMessages(
     if (m.media_type) {
       attrs += ` media_type="${escapeXml(m.media_type)}"`;
       if (m.media_path) {
-        const filename = m.media_path.split('/').pop() || '';
+        const filename = path.basename(m.media_path);
         attrs += ` media_path="/workspace/group/media/${escapeXml(filename)}"`;
       }
       if (m.media_mime) attrs += ` media_mime="${escapeXml(m.media_mime)}"`;
